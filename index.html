@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Femi — Systems & Backend Infrastructure Engineer</title>
+  <meta name="description" content="Portfolio of Femi (Falasefemi2), Backend Developer based in Lagos, Nigeria. Node/TypeScript + Java/Spring systems, Postgres SKIP LOCKED, and Effect-TS.">
+  <link rel="stylesheet" href="style.css">
+  <!-- Fonts: Space Grotesk for display, JetBrains Mono for technical specs and code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- System Status Header (Nav Archetype N9 edge-aligned: terminal status bar) -->
+  <header class="sys-header">
+    <div class="sys-logo">
+      <span class="sys-pulse" aria-hidden="true"></span>
+      <span class="sys-host">FEMI@PORTFOLIO</span>
+    </div>
+    <nav class="sys-nav" aria-label="Main Navigation">
+      <a href="#intro" class="nav-link">01.INTRO</a>
+      <a href="#visualizer" class="nav-link">02.SIMULATOR</a>
+      <a href="#projects" class="nav-link">03.REPOSITORIES</a>
+      <a href="#resume" class="nav-link">04.CV</a>
+      <a href="#contact" class="nav-link">05.DIAGNOSTICS</a>
+    </nav>
+  </header>
+
+  <main class="sys-container">
+    
+    <!-- SECTION 1: Intro/Hero -->
+    <section id="intro" class="sys-section intro-section" aria-labelledby="intro-title">
+      <div class="grid-layout">
+        <div class="col-left">
+          <h1 id="intro-title" class="glitch-title">Femi</h1>
+          <p class="subtitle-spec">BACKEND SYSTEMS & INFRASTRUCTURE ENGINEER</p>
+          
+          <!-- One-line skills summary for quick evaluation -->
+          <div class="skills-line">
+            <span class="skills-tag">STACK:</span>
+            <span class="skills-value">TypeScript/Node, Java/Spring Boot, Bun, PostgreSQL, Redis, PostGIS, Docker, Prisma, Drizzle</span>
+          </div>
+
+          <div class="intro-spec-table">
+            <div class="spec-row">
+              <span class="spec-label">ROLE</span>
+              <span class="spec-value">Backend Systems Developer</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">LOC</span>
+              <span class="spec-value">Lagos, Nigeria</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">FOCUS</span>
+              <span class="spec-value">Concurrency, Job Queues, Geo-spatial Engines, Marketplace Core APIs</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">GITHUB</span>
+              <span class="spec-value"><a href="https://github.com/Falasefemi2" target="_blank" rel="noopener noreferrer">Falasefemi2</a></span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-right">
+          <div class="terminal-bio">
+            <div class="term-header">
+              <span class="term-dot"></span>
+              <span class="term-dot"></span>
+              <span class="term-dot"></span>
+              <span class="term-title">system_info.sh</span>
+            </div>
+            <div class="term-body">
+              <p class="term-line"><span class="term-prompt">$</span> cat profile.md</p>
+              <p class="term-text">I build production backend architectures, specializing in asynchronous message systems, atomic transactional operations, and geo-spatial indices. My technical focus ranges from writing zero-lock job claiming workers with PostgreSQL raw operations, to developing highly responsive marketplace backends and clean Java security configurations. I value simplicity, code-level correctness, and low dependencies over unnecessary abstractions.</p>
+              <p class="term-line"><span class="term-prompt">$</span> run runtime_check<span class="term-cursor"></span></p>
+              <div class="pipeline-loader">
+                <span class="load-bar">[====================] 100% OK (TS/Spring)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGNATURE MOMENT: Live Queue & Pipeline Visualizer -->
+    <section id="visualizer" class="sys-section visualizer-section" aria-labelledby="viz-title">
+      <h2 id="viz-title" class="section-header">Live Queue & Pipeline Simulator</h2>
+      <p class="section-desc">Interactive execution runner comparing atomic DB polling mechanisms with concurrent fiber processing streams.</p>
+      
+      <div class="viz-wrapper">
+        <div class="viz-control-panel">
+          <button id="btn-spawn-job" class="sys-btn shadow-btn">
+            <span class="btn-icon">+</span> Enqueue Test Job
+          </button>
+          
+          <div class="viz-toggle-group">
+            <span class="toggle-label">EXECUTION MODE:</span>
+            <button id="btn-mode-paladin" class="toggle-btn active" data-mode="paladin">
+              Paladin (Postgres SKIP LOCKED)
+            </button>
+            <button id="btn-mode-effect" class="toggle-btn" data-mode="effect">
+              effectq (Effect-TS Streams)
+            </button>
+          </div>
+
+          <div class="viz-stats">
+            <div class="stat-pill"><span class="label">ENGINE:</span> <span id="stat-engine" class="val text-accent">Paladin</span></div>
+            <div class="stat-pill"><span class="label">WORKERS:</span> <span id="stat-fibers" class="val">3</span></div>
+            <div class="stat-pill"><span class="label">QUEUED:</span> <span id="stat-queued" class="val">0</span></div>
+          </div>
+        </div>
+
+        <div class="viz-grid">
+          <!-- Ingestion Column -->
+          <div class="viz-col" id="col-queue">
+            <div class="col-title">JOBS TABLE (Ingestion Pool)</div>
+            <div class="col-content queue-list" id="queue-pool">
+              <div class="empty-state">No pending jobs in DB. Click 'Enqueue Test Job' to populate.</div>
+            </div>
+          </div>
+
+          <!-- Fiber Execution Column -->
+          <div class="viz-col" id="col-fibers">
+            <div class="col-title" id="worker-col-title">CONCURRENT WORKERS (SELECT FOR UPDATE)</div>
+            <div class="col-content fiber-grid">
+              <div class="fiber-node" id="fiber-1" data-status="idle">
+                <div class="fiber-header">
+                  <span class="fiber-id">WORKER_01</span>
+                  <span class="fiber-status-dot"></span>
+                </div>
+                <div class="fiber-payload">State: IDLE</div>
+              </div>
+              <div class="fiber-node" id="fiber-2" data-status="idle">
+                <div class="fiber-header">
+                  <span class="fiber-id">WORKER_02</span>
+                  <span class="fiber-status-dot"></span>
+                </div>
+                <div class="fiber-payload">State: IDLE</div>
+              </div>
+              <div class="fiber-node" id="fiber-3" data-status="idle">
+                <div class="fiber-header">
+                  <span class="fiber-id">WORKER_03</span>
+                  <span class="fiber-status-dot"></span>
+                </div>
+                <div class="fiber-payload">State: IDLE</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Schedules & Error Column -->
+          <div class="viz-col" id="col-schedule">
+            <div class="col-title">LOCK RETRIES / SCHEDULES</div>
+            <div class="col-content schedule-list" id="schedule-pool">
+              <div class="empty-state">No active locks or retry schedules.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Selected Projects -->
+    <section id="projects" class="sys-section projects-section" aria-labelledby="projects-title">
+      <h2 id="projects-title" class="section-header">Selected Work</h2>
+      <p class="section-desc">Open-source backend systems, libraries, and marketplace components. Code design focused on concurrency control and type safety.</p>
+
+      <div class="projects-list">
+        
+        <!-- Project 1: Paladin -->
+        <article class="project-card" tabindex="0">
+          <div class="project-code-header">
+            <span class="code-keyword">import</span> { <span class="code-ident">PaladinQueue</span> } <span class="code-keyword">from</span> <span class="code-str">"@falasefemi2/paladin"</span>;
+          </div>
+          <div class="project-body">
+            <div class="project-info">
+              <h3 class="project-title">Paladin</h3>
+              <p class="project-text"><strong>Problem:</strong> Prevent race conditions and redundant execution when multiple distributed workers claim jobs simultaneously without introducing memory-locking bottlenecks or complex external coordination layers (e.g., Redis locks).<br><br><strong>Approach:</strong> Built a lightweight, Postgres-backed job queue running on a single <code>jobs</code> table. Workers claim entries atomically by executing a <code>SELECT FOR UPDATE SKIP LOCKED</code> query, securing targets without blocking other threads from accessing subsequent work.</p>
+              <div class="project-links">
+                <a href="https://github.com/Falasefemi2/Paladin" target="_blank" rel="noopener noreferrer" class="proj-link">src/</a>
+                <a href="#visualizer" class="proj-link">live_simulator/</a>
+              </div>
+            </div>
+            <div class="project-spec">
+              <pre><code><span class="code-keyword">interface</span> <span class="code-type">PaladinConfig</span> {
+  <span class="code-prop">runtime</span>: <span class="code-type">NodeJS</span> &lt;<span class="code-type">TypeScript</span>&gt;;
+  <span class="code-prop">database</span>: <span class="code-type">PostgreSQL</span>;
+  <span class="code-prop">concurrencyModel</span>: <span class="code-str">"SKIP LOCKED"</span>;
+  <span class="code-prop">atomicClaimQuery</span>: <span class="code-keyword">string</span>; <span class="code-comment">// SELECT FOR UPDATE SKIP LOCKED</span>
+  <span class="code-prop">locksNeeded</span>: <span class="code-keyword">false</span>;
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: EasyRent -->
+        <article class="project-card" tabindex="0">
+          <div class="project-code-header">
+            <span class="code-keyword">import</span> { <span class="code-ident">EasyRentCore</span> } <span class="code-keyword">from</span> <span class="code-str">"@falasefemi2/easyrent"</span>;
+          </div>
+          <div class="project-body">
+            <div class="project-info">
+              <h3 class="project-title">EasyRent Platform</h3>
+              <p class="project-text"><strong>Problem:</strong> Coordinate complex spatial property querying ( Lagos maps) while maintaining secure, non-blocking authentication session lifetimes for API integrations.<br><br><strong>Approach:</strong> Engineered a full-stack Nigerian rental platform. The backend integrates PostGIS for proximity coordinate matching, Redis cache boundaries, and Drizzle ORM. The frontend leverages Next.js and integrates a custom fetch engine built around Effect-TS's ManagedRuntime that automatically intercept-refreshes expired access tokens.</p>
+              <div class="project-links">
+                <a href="https://github.com/Falasefemi2/easyrent" target="_blank" rel="noopener noreferrer" class="proj-link">backend_src/</a>
+                <a href="https://github.com/Falasefemi2/easyrent-fe" target="_blank" rel="noopener noreferrer" class="proj-link">frontend_src/</a>
+                <a href="https://used-odilia-femmieorg-e85b92f9.koyeb.app/docs" target="_blank" rel="noopener noreferrer" class="proj-link">api_docs/</a>
+                <a href="https://easyrent-fe-eight.vercel.app/" target="_blank" rel="noopener noreferrer" class="proj-link">live/</a>
+              </div>
+            </div>
+            <div class="project-spec">
+              <pre><code><span class="code-keyword">type</span> <span class="code-type">EasyRentStack</span> = {
+  <span class="code-prop">engine</span>: <span class="code-type">Effect</span> &lt;<span class="code-type">v4</span>, <span class="code-type">Bun</span>&gt;;
+  <span class="code-prop">database</span>: <span class="code-type">PostgreSQL</span> &lt;<span class="code-type">PostGIS</span>, <span class="code-type">Drizzle</span>&gt;;
+  <span class="code-prop">caching</span>: <span class="code-type">Redis</span>;
+  <span class="code-prop">authLayer</span>: <span class="code-type">ManagedRuntime</span> &lt;<span class="code-type">TokenRefresh</span>&gt;;
+  <span class="code-prop">client</span>: <span class="code-type">NextJS_15</span> &lt;<span class="code-type">Tailwind</span>&gt;;
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: VendorHub v2 -->
+        <article class="project-card" tabindex="0">
+          <div class="project-code-header">
+            <span class="code-keyword">import</span> { <span class="code-ident">VendorHubEngine</span> } <span class="code-keyword">from</span> <span class="code-str">"@falasefemi2/vendorhub-v2"</span>;
+          </div>
+          <div class="project-body">
+            <div class="project-info">
+              <h3 class="project-title">VendorHub v2</h3>
+              <p class="project-text"><strong>Problem:</strong> Small-scale WhatsApp micro-merchants experience extreme sales attrition due to status catalog listings expiring and disappearing every 24 hours.<br><br><strong>Approach:</strong> Engineered a WhatsApp catalog-preservation backend. Uses Node/TypeScript coupled with Express and Prisma ORM to index status-media assets via Baileys API handlers, committing uploads to Postgres. Serves persistent, static Next.js storefront pages allowing buyers to browse inventories infinitely.</p>
+              <div class="project-links">
+                <a href="https://github.com/Falasefemi2/vendorhub-v2-backend" target="_blank" rel="noopener noreferrer" class="proj-link">backend_src/</a>
+                <a href="https://github.com/Falasefemi2/vendorhub-v2-frontend" target="_blank" rel="noopener noreferrer" class="proj-link">frontend_src/</a>
+                <a href="https://vendorhub-v2-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" class="proj-link">live/</a>
+              </div>
+            </div>
+            <div class="project-spec">
+              <pre><code><span class="code-keyword">interface</span> <span class="code-type">VendorHubSystem</span> {
+  <span class="code-prop">apiGateway</span>: <span class="code-type">Express</span> &lt;<span class="code-type">TypeScript</span>&gt;;
+  <span class="code-prop">dataMapping</span>: <span class="code-type">PrismaORM</span>;
+  <span class="code-prop">importer</span>: <span class="code-type">BaileysClient</span>; <span class="code-comment">// whatsapp crawler</span>
+  <span class="code-prop">persistence</span>: <span class="code-type">PostgreSQL</span>;
+  <span class="code-prop">cacheState</span>: <span class="code-type">Redis</span>;
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4: Cronforge -->
+        <article class="project-card" tabindex="0">
+          <div class="project-code-header">
+            <span class="code-keyword">import</span> { <span class="code-ident">CronforgeScheduler</span> } <span class="code-keyword">from</span> <span class="code-str">"@falasefemi2/cronforge"</span>;
+          </div>
+          <div class="project-body">
+            <div class="project-info">
+              <h3 class="project-title">Cronforge</h3>
+              <p class="project-text"><strong>Problem:</strong> Scattered engineering articles on technical hubs require manual daily discovery, reading, and bookmarking.<br><br><strong>Approach:</strong> Built a daily scheduled parser in Node/TypeScript using Bun. Executes background cron schedules that automatically fetch relevant article payloads from the Dev.to endpoint and delivers a formatted clean newsletter directly to user email boxes using Resend integrations.</p>
+              <div class="project-links">
+                <a href="https://github.com/Falasefemi2/cronforge" target="_blank" rel="noopener noreferrer" class="proj-link">src/</a>
+              </div>
+            </div>
+            <div class="project-spec">
+              <pre><code><span class="code-keyword">type</span> <span class="code-type">CronforgeStack</span> = {
+  <span class="code-prop">runtime</span>: <span class="code-type">Bun</span>;
+  <span class="code-prop">scheduler</span>: <span class="code-type">NodeCron</span>;
+  <span class="code-prop">orm</span>: <span class="code-type">Drizzle</span>;
+  <span class="code-prop">database</span>: <span class="code-type">PostgreSQL</span>;
+  <span class="code-prop">dispatch</span>: <span class="code-type">ResendAPI</span>;
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 5: security-docker -->
+        <article class="project-card" tabindex="0">
+          <div class="project-code-header">
+            <span class="code-keyword">import</span> { <span class="code-ident">SecurityDocker</span> } <span class="code-keyword">from</span> <span class="code-str">"falasefemi2.security.docker"</span>;
+          </div>
+          <div class="project-body">
+            <div class="project-info">
+              <h3 class="project-title">security-docker</h3>
+              <p class="project-text"><strong>Problem:</strong> Configure robust stateless user access controls on Spring Boot enterprise applications while ensuring isolation across target production micro-deployments.<br><br><strong>Approach:</strong> Engineered a secure Java REST API demonstrating JWT-based authentication and authorization architectures. Configured custom Spring Security filter chains for token verification, isolated and compiled into a secure container deployment using Docker.</p>
+              <div class="project-links">
+                <a href="https://github.com/Falasefemi2/security-docker" target="_blank" rel="noopener noreferrer" class="proj-link">src/</a>
+              </div>
+            </div>
+            <div class="project-spec">
+              <pre><code><span class="code-keyword">class</span> <span class="code-type">SecurityDockerSetup</span> {
+  <span class="code-prop">framework</span>: <span class="code-type">SpringBoot</span> &lt;<span class="code-type">Java</span>&gt;;
+  <span class="code-prop">securityScope</span>: <span class="code-type">SpringSecurity</span>;
+  <span class="code-prop">authScheme</span>: <span class="code-type">JWT</span>;
+  <span class="code-prop">containerization</span>: <span class="code-type">Docker</span>;
+  <span class="code-prop">db</span>: <span class="code-type">PostgreSQL</span>;
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Additional non-public distributed-systems work details -->
+      <div class="non-public-work">
+        <h3 class="non-public-title">// Non-Public Enterprise / Core Implementations</h3>
+        <ul class="non-public-list">
+          <li>
+            <strong>effectq</strong>: Personal PostgreSQL job queue, pg-boss model, built on Effect-TS v4 + Bun. Uses <code>Context.Service</code>, <code>Layer.scoped + acquireRelease</code>, Stream-based workers with `SKIP LOCKED` polling, Schedule for retries/cron, and typed error unions.
+          </li>
+          <li>
+            <strong>Chowdeck Engine (Clone)</strong>: Backend core managing order lifecycles via deterministic state machines. Stack uses Drizzle, <code>@effect/sql-pg</code>, background dispatch with <code>forkDetach</code>, and spatial proximity calculations.
+          </li>
+          <li>
+            <strong>EasyWorka</strong>: Enterprise HR application built solo at Vatebra. Centerpiece is a generic approval-workflow state machine covering Leave, Exit, Memo, Voucher, and Trip approvals.
+          </li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- SECTION 3: Resume -->
+    <section id="resume" class="sys-section resume-section" aria-labelledby="resume-title">
+      <div class="resume-wrapper">
+        <div class="resume-content">
+          <h2 id="resume-title" class="section-header">Systems CV / Resume</h2>
+          <p class="section-desc">Femi's engineering curriculum, professional experience at Vatebra, and backend infrastructure projects documented in detail.</p>
+        </div>
+        <div class="resume-action">
+          <a href="https://docs.google.com/document/d/1KvdIgAEvrdanm7yekNg45tPnngyas0wdqfRTjD1ssag/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="sys-btn resume-btn">
+            <span class="btn-icon">📋</span> OPEN_RESUME_DOC
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Contact / Diagnostics -->
+    <section id="contact" class="sys-section contact-section" aria-labelledby="contact-title">
+      <div class="contact-grid">
+        <div class="contact-details">
+          <h2 id="contact-title" class="section-header">Diagnostics & Contact</h2>
+          <p class="section-desc">Available for backend systems design, database optimizations, REST API development, and distributed worker integrations.</p>
+          <div class="contact-meta">
+            <div class="contact-item">
+              <span class="label">GITHUB:</span>
+              <a href="https://github.com/Falasefemi2" target="_blank" rel="noopener noreferrer" class="val link-accent">github.com/Falasefemi2</a>
+            </div>
+            <div class="contact-item">
+              <span class="label">EMAIL:</span>
+              <a href="mailto:femifalase228@gmail.com" class="val link-accent">femifalase228@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <span class="label">STATUS:</span>
+              <span class="val text-active-pulse"><span class="pulse-dot"></span>AVAILABLE_FOR_HIRE</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="system-readout">
+          <div class="readout-title">HOST SYSTEM STACK</div>
+          <pre><code>OS      : Ubuntu 24.04 LTS (Production)
+Runtime : NodeJS v20.12.2 / Bun v1.1.18
+Backend : TypeScript / Java-Spring
+Console : tty/1 (standard inputs)
+Status  : Systems operational</code></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="sys-footer">
+    <div class="footer-inner">
+      <span class="footer-copy">© 2026 Femi. Built with raw code. No layouts were generated.</span>
+      <span class="footer-sig">FALASEFEMI2_CORE_ENG</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
