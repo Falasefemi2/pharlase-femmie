@@ -402,4 +402,34 @@ document.addEventListener("DOMContentLoaded", () => {
       termBody.scrollTop = termBody.scrollHeight;
     }
   }
+
+  // --- Mobile Navigation Toggle ---
+  const navToggle = document.getElementById("nav-toggle");
+  const sysNav = document.getElementById("sys-nav");
+
+  if (navToggle && sysNav) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = sysNav.classList.toggle("is-open");
+      navToggle.classList.toggle("is-active", isOpen);
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    // Close the mobile menu after a nav link is tapped
+    sysNav.querySelectorAll(".nav-link").forEach(link => {
+      link.addEventListener("click", () => {
+        sysNav.classList.remove("is-open");
+        navToggle.classList.remove("is-active");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    // Close the mobile menu if the viewport is resized back to desktop
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        sysNav.classList.remove("is-open");
+        navToggle.classList.remove("is-active");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 });

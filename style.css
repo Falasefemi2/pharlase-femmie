@@ -49,6 +49,9 @@ html {
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  /* Prevent iOS text auto-inflation from breaking layout on rotation */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -56,6 +59,13 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+/* Global overflow guard: nothing should force horizontal scroll */
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Typography Purity: headings are strictly roman/normal */
@@ -100,6 +110,7 @@ button:focus-visible,
   position: sticky;
   top: 0;
   z-index: 100;
+  gap: 1rem;
 }
 
 .sys-logo {
@@ -110,6 +121,9 @@ button:focus-visible,
   font-weight: 700;
   letter-spacing: 0.05em;
   font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sys-pulse {
@@ -120,6 +134,7 @@ button:focus-visible,
   border-radius: 50%;
   box-shadow: 0 0 8px var(--color-success);
   animation: pulse-glow 2s infinite ease-in-out;
+  flex-shrink: 0;
 }
 
 .sys-nav {
@@ -133,11 +148,52 @@ button:focus-visible,
   color: var(--color-text-secondary);
   border-bottom: 1px solid transparent;
   padding-bottom: 2px;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
   color: var(--color-accent);
   border-bottom-color: var(--color-accent);
+}
+
+/* Mobile hamburger toggle — hidden on desktop */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background-color: oklch(20% 0.01 240);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  padding: 0;
+  z-index: 101;
+}
+
+.nav-toggle-bar {
+  width: 16px;
+  height: 2px;
+  background-color: var(--color-text-primary);
+  border-radius: 1px;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.nav-toggle:hover {
+  border-color: var(--color-accent);
+}
+
+.nav-toggle.is-active .nav-toggle-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav-toggle.is-active .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle.is-active .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 /* --------------------------------------------------------------------------
@@ -149,6 +205,7 @@ button:focus-visible,
   margin: 0 auto;
   padding: 0 2rem;
   flex: 1;
+  min-width: 0;
 }
 
 .sys-section {
@@ -191,7 +248,7 @@ button:focus-visible,
    4. INTRO / HERO (Section 1)
    -------------------------------------------------------------------------- */
 .glitch-title {
-  font-size: clamp(4rem, 10vw, 7.5rem);
+  font-size: clamp(3rem, 10vw, 7.5rem);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.04em;
@@ -231,6 +288,7 @@ button:focus-visible,
 
 .skills-value {
   color: var(--color-text-primary);
+  min-width: 0;
 }
 
 .intro-spec-table {
@@ -244,20 +302,25 @@ button:focus-visible,
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--color-border);
   font-size: 0.85rem;
+  gap: 1rem;
 }
 
 .spec-label {
   color: var(--color-text-secondary);
+  flex-shrink: 0;
 }
 
 .spec-value {
   font-weight: 500;
   color: var(--color-text-primary);
+  text-align: right;
+  min-width: 0;
 }
 
 .spec-value a {
   color: var(--color-accent);
   border-bottom: 1px solid transparent;
+  overflow-wrap: anywhere;
 }
 
 .spec-value a:hover {
@@ -324,6 +387,7 @@ button:focus-visible,
 
 .term-line {
   margin-bottom: 0.5rem;
+  overflow-wrap: break-word;
 }
 
 .term-text {
@@ -337,10 +401,12 @@ button:focus-visible,
   border: 1px solid var(--color-border);
   padding: 0.5rem;
   border-radius: 2px;
+  overflow-x: auto;
 }
 
 .load-bar {
   color: var(--color-success);
+  white-space: nowrap;
 }
 
 /* --------------------------------------------------------------------------
@@ -376,6 +442,7 @@ button:focus-visible,
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
   transition: all var(--transition-fast);
 }
@@ -398,6 +465,7 @@ button:focus-visible,
   border: 1px solid var(--color-border);
   padding: 0.25rem;
   border-radius: var(--border-radius);
+  flex-wrap: wrap;
 }
 
 .toggle-label {
@@ -405,6 +473,7 @@ button:focus-visible,
   color: var(--color-text-muted);
   padding: 0 0.5rem;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .toggle-btn {
@@ -417,6 +486,7 @@ button:focus-visible,
   border-radius: 2px;
   cursor: pointer;
   transition: all var(--transition-fast);
+  white-space: normal;
 }
 
 .toggle-btn.active {
@@ -433,6 +503,7 @@ button:focus-visible,
 .viz-stats {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .stat-pill {
@@ -443,6 +514,7 @@ button:focus-visible,
   border-radius: 2px;
   display: flex;
   gap: 0.4rem;
+  white-space: nowrap;
 }
 
 .stat-pill .label {
@@ -467,6 +539,7 @@ button:focus-visible,
   border-right: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .viz-col:last-child {
@@ -478,7 +551,7 @@ button:focus-visible,
   color: var(--color-text-secondary);
   font-weight: 500;
   text-align: center;
-  padding: 0.6rem 0;
+  padding: 0.6rem 0.5rem;
   background-color: oklch(15% 0.01 240);
   border-bottom: 1px solid var(--color-border);
 }
@@ -490,7 +563,9 @@ button:focus-visible,
   flex-direction: column;
   gap: 0.75rem;
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: 340px;
+  min-width: 0;
 }
 
 /* Ingestion Column items */
@@ -509,6 +584,8 @@ button:focus-visible,
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .job-node .job-id {
@@ -518,6 +595,7 @@ button:focus-visible,
 .job-node .job-type {
   font-weight: bold;
   color: var(--color-text-primary);
+  overflow-wrap: break-word;
 }
 
 /* Fiber Column items */
@@ -533,6 +611,7 @@ button:focus-visible,
   border-radius: var(--border-radius);
   padding: 0.8rem;
   transition: all var(--transition-normal);
+  min-width: 0;
 }
 
 .fiber-header {
@@ -540,6 +619,7 @@ button:focus-visible,
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.4rem;
+  gap: 0.5rem;
 }
 
 .fiber-id {
@@ -554,6 +634,7 @@ button:focus-visible,
   border-radius: 50%;
   background-color: var(--color-text-muted);
   transition: all var(--transition-fast);
+  flex-shrink: 0;
 }
 
 .fiber-payload {
@@ -596,6 +677,8 @@ button:focus-visible,
   flex-direction: column;
   gap: 0.2rem;
   animation: shake 0.3s ease-in-out;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .retry-node .retry-title {
@@ -644,6 +727,7 @@ button:focus-visible,
   border-left: 2px solid transparent;
   transition: all var(--transition-fast);
   position: relative;
+  overflow-wrap: break-word;
 }
 
 .project-code-header::before {
@@ -685,6 +769,7 @@ button:focus-visible,
   flex-direction: column;
   justify-content: space-between;
   border-right: 1px solid var(--color-border);
+  min-width: 0;
 }
 
 .project-title {
@@ -726,6 +811,8 @@ button:focus-visible,
   display: flex;
   align-items: center;
   overflow-x: auto;
+  min-width: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .project-spec pre {
@@ -764,6 +851,7 @@ button:focus-visible,
   font-size: 0.85rem;
   color: var(--color-text-secondary);
   line-height: 1.6;
+  overflow-wrap: break-word;
 }
 
 .non-public-list li::before {
@@ -795,7 +883,8 @@ button:focus-visible,
 }
 
 .resume-content {
-  flex: 1 1 500px;
+  flex: 1 1 300px;
+  min-width: 0;
 }
 
 .resume-content .section-header {
@@ -841,15 +930,20 @@ button:focus-visible,
   font-size: 0.9rem;
   border-bottom: 1px solid var(--color-border);
   padding-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
 }
 
 .contact-item .label {
   width: 100px;
   color: var(--color-text-secondary);
+  flex-shrink: 0;
 }
 
 .contact-item .val {
   font-weight: 500;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .link-accent {
@@ -867,6 +961,7 @@ button:focus-visible,
   align-items: center;
   gap: 0.5rem;
   font-weight: bold;
+  flex-wrap: wrap;
 }
 
 .pulse-dot {
@@ -876,6 +971,7 @@ button:focus-visible,
   background-color: var(--color-success);
   box-shadow: 0 0 6px var(--color-success);
   animation: pulse-glow-mini 1s infinite alternate;
+  flex-shrink: 0;
 }
 
 .system-readout {
@@ -883,6 +979,9 @@ button:focus-visible,
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   padding: 1.5rem;
+  overflow-x: auto;
+  min-width: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .readout-title {
@@ -913,11 +1012,17 @@ button:focus-visible,
   align-items: center;
   font-size: 0.75rem;
   color: var(--color-text-muted);
+  gap: 1rem;
+}
+
+.footer-copy {
+  min-width: 0;
 }
 
 .footer-sig {
   font-weight: bold;
   color: var(--color-text-secondary);
+  white-space: nowrap;
 }
 
 /* --------------------------------------------------------------------------
@@ -963,6 +1068,8 @@ button:focus-visible,
 }
 
 /* Responsive Overrides */
+
+/* Tablet: collapse two-column grids to one column */
 @media (max-width: 900px) {
   .grid-layout, .contact-grid {
     grid-template-columns: 1fr;
@@ -993,6 +1100,86 @@ button:focus-visible,
   }
 }
 
+/* Navigation: switch to hamburger + dropdown below the header */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .sys-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background-color: oklch(13% 0.01 240 / 0.98);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height var(--transition-normal), opacity var(--transition-normal);
+  }
+
+  .sys-nav.is-open {
+    max-height: 400px;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-link {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    width: 100%;
+  }
+
+  .nav-link:hover {
+    background-color: var(--color-surface-hover);
+    border-bottom-color: var(--color-border);
+  }
+}
+
+/* Toggle group: stack execution-mode buttons full width so long labels
+   never get squeezed or clipped */
+@media (max-width: 640px) {
+  .viz-control-panel {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sys-btn.shadow-btn {
+    width: 100%;
+  }
+
+  .viz-toggle-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .toggle-label {
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+  }
+
+  .toggle-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .viz-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .stat-pill {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 600px) {
   .sys-header {
     padding: 0 1rem;
@@ -1002,10 +1189,6 @@ button:focus-visible,
     gap: 0.75rem;
   }
   
-  .nav-link {
-    font-size: 0.75rem;
-  }
-  
   .sys-container {
     padding: 0 1rem;
   }
@@ -1013,22 +1196,84 @@ button:focus-visible,
   .section-header {
     font-size: 1.75rem;
   }
+
+  .sys-section {
+    padding: 3rem 0;
+  }
   
   .footer-inner {
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: flex-start;
     padding: 0 1rem;
   }
-  
+
   .resume-wrapper {
     padding: 1.5rem;
   }
-  
+
+  .resume-action {
+    width: 100%;
+  }
+
+  .resume-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .skills-line {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
+  }
+
+  .project-info,
+  .project-spec {
+    padding: 1.25rem;
+  }
+
+  .project-code-header {
+    padding: 0.6rem 1rem;
+  }
+
+  .project-card:hover .project-code-header {
+    padding-left: 1.3rem;
+  }
+
+  .col-content {
+    padding: 0.75rem;
+  }
+
+  .spec-row {
+    font-size: 0.8rem;
+  }
+
+  .contact-item .label {
+    width: 80px;
+  }
+}
+
+/* Small phones: tighten hero type scale and spacing further */
+@media (max-width: 380px) {
+  .glitch-title {
+    font-size: 2.75rem;
+  }
+
+  .subtitle-spec {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  .section-header {
+    font-size: 1.5rem;
+  }
+
+  .contact-item {
+    flex-direction: column;
+  }
+
+  .contact-item .label {
+    width: auto;
   }
 }
 
