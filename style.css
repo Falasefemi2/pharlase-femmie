@@ -172,6 +172,11 @@ button:focus-visible,
   cursor: pointer;
   padding: 0;
   z-index: 101;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.nav-toggle:active {
+  transform: scale(0.92);
 }
 
 .nav-toggle-bar {
@@ -489,6 +494,11 @@ button:focus-visible,
   white-space: normal;
 }
 
+.toggle-btn:active {
+  transform: scale(0.96);
+  transition: transform var(--transition-fast);
+}
+
 .toggle-btn.active {
   background-color: var(--color-accent);
   color: var(--color-bg);
@@ -586,6 +596,25 @@ button:focus-visible,
   gap: 0.2rem;
   min-width: 0;
   overflow-wrap: break-word;
+  max-height: 80px;
+  opacity: 1;
+  transition: max-height var(--transition-fast),
+              padding var(--transition-fast),
+              margin var(--transition-fast),
+              opacity var(--transition-fast),
+              border var(--transition-fast);
+}
+
+.job-node.collapsing {
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: -0.75rem !important;
+  opacity: 0 !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+  overflow: hidden;
 }
 
 .job-node .job-id {
@@ -679,6 +708,25 @@ button:focus-visible,
   animation: shake 0.3s ease-in-out;
   min-width: 0;
   overflow-wrap: break-word;
+  max-height: 80px;
+  opacity: 1;
+  transition: max-height var(--transition-fast),
+              padding var(--transition-fast),
+              margin var(--transition-fast),
+              opacity var(--transition-fast),
+              border var(--transition-fast);
+}
+
+.retry-node.collapsing {
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: -0.75rem !important;
+  opacity: 0 !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+  overflow: hidden;
 }
 
 .retry-node .retry-title {
@@ -1120,7 +1168,7 @@ button:focus-visible,
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    transition: max-height var(--transition-normal), opacity var(--transition-normal);
+    transition: max-height var(--transition-normal), opacity var(--transition-normal), visibility var(--transition-normal);
   }
 
   .sys-nav.is-open {

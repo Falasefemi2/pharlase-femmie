@@ -185,14 +185,14 @@ document.addEventListener("DOMContentLoaded", () => {
     currentNodes.forEach(node => {
       const jobId = node.dataset.jobId;
       if (!jobQueue.some(j => j.id === jobId)) {
-        if (!node.classList.contains("fade-out")) {
-          node.classList.add("fade-out");
+        if (!node.classList.contains("collapsing")) {
+          node.classList.add("collapsing");
           setTimeout(() => {
             node.remove();
-            if (queuePool.querySelectorAll(".job-node:not(.fade-out)").length === 0 && jobQueue.length === 0) {
+            if (queuePool.querySelectorAll(".job-node:not(.collapsing)").length === 0 && jobQueue.length === 0) {
               queuePool.innerHTML = `<div class="empty-state">No jobs in ${executionMode === "paladin" ? "DB Table" : "Queue Stream"}. Click 'Enqueue Test Job' to populate.</div>`;
             }
-          }, 250);
+          }, 150);
         }
       }
     });
@@ -316,11 +316,14 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (countdown <= 0) {
           clearInterval(interval);
-          retryNode.remove();
+          retryNode.classList.add("collapsing");
+          setTimeout(() => {
+            retryNode.remove();
+            checkScheduleEmptyState();
+          }, 150);
           
           jobQueue.push(job);
           renderQueue();
-          checkScheduleEmptyState();
         }
       }, 1000);
       
@@ -362,11 +365,14 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (countdown <= 0) {
           clearInterval(interval);
-          retryNode.remove();
+          retryNode.classList.add("collapsing");
+          setTimeout(() => {
+            retryNode.remove();
+            checkScheduleEmptyState();
+          }, 150);
           
           jobQueue.push(job);
           renderQueue();
-          checkScheduleEmptyState();
         }
       }, 1000);
       
