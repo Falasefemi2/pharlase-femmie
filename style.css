@@ -926,6 +926,143 @@ button:focus-visible,
 }
 
 /* --------------------------------------------------------------------------
+   6b. WORK EXPERIENCE SECTION
+   -------------------------------------------------------------------------- */
+.experience-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-top: 1.5rem;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 220px 40px 1fr;
+  gap: 1rem;
+  align-items: start;
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-fast);
+}
+
+.timeline-item:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 8px;
+}
+
+.timeline-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.timeline-meta .job-date {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: bold;
+}
+
+.timeline-meta .company-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.timeline-meta .job-role {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.timeline-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  position: relative;
+  min-height: 100px;
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-border);
+  border-radius: 50%;
+  z-index: 2;
+  margin-top: 0.4rem;
+  transition: all var(--transition-fast);
+}
+
+.timeline-item:hover .timeline-dot {
+  background-color: var(--color-accent);
+  box-shadow: 0 0 6px var(--color-accent);
+}
+
+.timeline-dot.active-status {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-success);
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+.timeline-line {
+  width: 1px;
+  background-color: var(--color-border);
+  position: absolute;
+  top: 1rem;
+  bottom: -3.5rem; /* Extends to next item */
+  left: calc(50% - 0.5px);
+  z-index: 1;
+}
+
+/* Last timeline item has no line extending after it */
+.timeline-item:last-child .timeline-line {
+  display: none;
+}
+
+.timeline-content {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  transition: border-color var(--transition-normal);
+}
+
+.timeline-item:hover .timeline-content {
+  border-color: var(--color-accent-dim);
+}
+
+.job-tasks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.job-tasks li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+.job-tasks li::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-weight: bold;
+}
+
+/* --------------------------------------------------------------------------
    7. RESUME CV SECTION (Section 4)
    -------------------------------------------------------------------------- */
 .resume-wrapper {
@@ -1187,7 +1324,8 @@ button:focus-visible,
   }
 
   .sys-nav.is-open {
-    max-height: 400px;
+max-height: min(70vh, 500px);
+overflow-y: auto;
     opacity: 1;
     visibility: visible;
     transform: scale(1);
@@ -1202,6 +1340,40 @@ button:focus-visible,
   .nav-link:hover {
     background-color: var(--color-surface-hover);
     border-bottom-color: var(--color-border);
+  }
+
+  /* Experience Timeline Mobile Overrides */
+  .experience-timeline {
+    border-left: 1px solid var(--color-border);
+    padding-left: 1.5rem;
+    margin-left: 0.5rem;
+    gap: 2.5rem;
+  }
+  
+  .timeline-item {
+    grid-template-columns: 1fr;
+    position: relative;
+    gap: 0.5rem;
+  }
+  
+  .timeline-rail {
+    position: absolute;
+    left: -1.5rem;
+    top: 0.35rem;
+    width: 0;
+    height: auto;
+    min-height: auto;
+    align-self: auto;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .timeline-line {
+    display: none;
+  }
+
+  .timeline-dot {
+    margin-top: 0;
   }
 }
 
@@ -1422,5 +1594,77 @@ button:focus-visible,
   to {
     opacity: 0;
     transform: translateX(20px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TECH STACK GRID
+   -------------------------------------------------------------------------- */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.stack-item {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+  min-width: 0;
+}
+
+.stack-icon {
+  width: 36px;
+  height: 36px;
+  filter: grayscale(100%) brightness(1.4);
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.stack-label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  transition: color var(--transition-fast);
+}
+
+.stack-item:hover,
+.stack-item:focus-visible {
+  border-color: var(--color-accent);
+}
+
+.stack-item:hover .stack-icon,
+.stack-item:focus-visible .stack-icon {
+  filter: none;
+  transform: scale(1.08);
+}
+
+.stack-item:hover .stack-label,
+.stack-item:focus-visible .stack-label {
+  color: var(--color-text-primary);
+}
+
+.stack-item:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 600px) {
+  .stack-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .stack-item {
+    padding: 1rem 0.75rem;
+  }
+
+  .stack-icon {
+    width: 30px;
+    height: 30px;
   }
 }

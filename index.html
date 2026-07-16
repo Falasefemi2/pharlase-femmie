@@ -23,14 +23,15 @@
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
     </button>
-    <nav id="sys-nav" class="sys-nav" aria-label="Main Navigation">
-      <a href="#intro" class="nav-link">01.INTRO</a>
-      <a href="#visualizer" class="nav-link">02.SIMULATOR</a>
-      <a href="#projects" class="nav-link">03.REPOSITORIES</a>
-      <a href="#resume" class="nav-link">04.CV</a>
-      <a href="#contact" class="nav-link">05.DIAGNOSTICS</a>
-    </nav>
-  </header>
+<nav id="sys-nav" class="sys-nav" aria-label="Main Navigation">
+  <a href="#intro" class="nav-link">01.INTRO</a>
+  <a href="#visualizer" class="nav-link">02.SIMULATOR</a>
+  <a href="#projects" class="nav-link">03.REPOSITORIES</a>
+  <a href="#stack" class="nav-link">04.STACK</a>
+  <a href="#experience" class="nav-link">05.EXPERIENCE</a>
+  <a href="#resume" class="nav-link">06.CV</a>
+  <a href="#contact" class="nav-link">07.DIAGNOSTICS</a>
+</nav>  </header>
 
   <main class="sys-container">
     
@@ -305,21 +306,147 @@
       </div>
 
       <!-- Additional non-public distributed-systems work details -->
-      <div class="non-public-work">
-        <h3 class="non-public-title">// Non-Public Enterprise / Core Implementations</h3>
-        <ul class="non-public-list">
-          <li>
-            <strong>effectq</strong>: Personal PostgreSQL job queue, pg-boss model, built on Effect-TS v4 + Bun. Uses <code>Context.Service</code>, <code>Layer.scoped + acquireRelease</code>, Stream-based workers with `SKIP LOCKED` polling, Schedule for retries/cron, and typed error unions.
-          </li>
-          <li>
-            <strong>Chowdeck Engine (Clone)</strong>: Backend core managing order lifecycles via deterministic state machines. Stack uses Drizzle, <code>@effect/sql-pg</code>, background dispatch with <code>forkDetach</code>, and spatial proximity calculations.
-          </li>
-          <li>
-            <strong>EasyWorka</strong>: Enterprise HR application built solo at Vatebra. Centerpiece is a generic approval-workflow state machine covering Leave, Exit, Memo, Voucher, and Trip approvals.
-          </li>
-        </ul>
+<div class="non-public-work">
+  <h3 class="non-public-title">// Non-Public Enterprise / Core Implementations</h3>
+  <ul class="non-public-list">
+    <li>
+      <strong>effectq</strong>: Personal PostgreSQL job queue, pg-boss model, built on Effect-TS v4 + Bun. Uses <code>Context.Service</code>, <code>Layer.scoped + acquireRelease</code>, Stream-based workers with `SKIP LOCKED` polling, Schedule for retries/cron, and typed error unions.
+      <div class="project-links" style="margin-top: 0.5rem;">
+        <a href="https://github.com/Falasefemi2/qronjobs" target="_blank" rel="noopener noreferrer" class="proj-link">src/</a>
       </div>
+    </li>
+    <li>
+      <strong>Chowdeck Engine (Clone)</strong>: Backend core managing order lifecycles via deterministic state machines. Stack uses Drizzle, <code>@effect/sql-pg</code>, background dispatch with <code>forkDetach</code>, and spatial proximity calculations.
+      <div class="project-links" style="margin-top: 0.5rem;">
+        <a href="https://github.com/Falasefemi2/order-food" target="_blank" rel="noopener noreferrer" class="proj-link">src/</a>
+      </div>
+    </li>
+    <li>
+      <strong>EasyWorka</strong>: Enterprise HR application built solo at Vatebra. Centerpiece is a generic approval-workflow state machine covering Leave, Exit, Memo, Voucher, and Trip approvals.
+      <div class="project-links" style="margin-top: 0.5rem;">
+        <a href="https://github.com/Falasefemi2/eazyworka" target="_blank" rel="noopener noreferrer" class="proj-link">src/</a>
+      </div>
+    </li>
+  </ul>
+</div>
 
+    </section>
+
+    <section id="stack" class="sys-section stack-section" aria-labelledby="stack-title">
+  <h2 id="stack-title" class="section-header">Tech Stack</h2>
+  <p class="section-desc">Core languages, runtimes, and infrastructure tooling used in production.</p>
+
+  <div class="stack-grid">
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">TypeScript</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">Node.js</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bun/bun-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">Bun</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">Java</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">Spring Boot</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">PostgreSQL</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">Redis</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">Docker</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">Nginx</span>
+    </div>
+    <div class="stack-item" tabindex="0">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg" alt="" class="stack-icon" loading="lazy">
+      <span class="stack-label">Neovim</span>
+    </div>
+  </div>
+</section>
+
+    <!-- SECTION: Work Experience -->
+    <section id="experience" class="sys-section experience-section" aria-labelledby="experience-title">
+      <h2 id="experience-title" class="section-header">Work Experience</h2>
+      <p class="section-desc">Execution logs and software contributions across enterprise and agency environments.</p>
+
+      <div class="experience-timeline">
+        
+        <!-- Role 1: Vatebra Limited -->
+        <div class="timeline-item" tabindex="0">
+          <div class="timeline-meta">
+            <span class="job-date">June 2025 – Present</span>
+            <h3 class="company-name">Vatebra Limited</h3>
+            <span class="job-role">Frontend Developer</span>
+          </div>
+          <div class="timeline-rail">
+            <span class="timeline-dot active-status"></span>
+            <span class="timeline-line"></span>
+          </div>
+          <div class="timeline-content">
+            <ul class="job-tasks">
+              <li>Delivered multiple frontend projects, including the Nigeria Computer Society website and an internal HR platform used company-wide</li>
+              <li>Built and shipped a range of client and internal-facing web applications as part of a fast-paced, multi-project frontend workload</li>
+              <li>Worked independently across projects, owning frontend implementation from requirements through deployment</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Role 2: Noemdek -->
+        <div class="timeline-item" tabindex="0">
+          <div class="timeline-meta">
+            <span class="job-date">Sept 2024 – Jan 2025</span>
+            <h3 class="company-name">Noemdek Limited</h3>
+            <span class="job-role">Frontend Developer</span>
+          </div>
+          <div class="timeline-rail">
+            <span class="timeline-dot"></span>
+            <span class="timeline-line"></span>
+          </div>
+          <div class="timeline-content">
+            <ul class="job-tasks">
+              <li>Built and maintained frontend for an advertising web application, handling UI implementation and feature development</li>
+              <li>Developed frontend for a transportation web application, translating product requirements into functional interfaces</li>
+              <li>Worked across two concurrent products, adapting to different codebases, design patterns, and business domains</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Role 3: Sterling Bank -->
+        <div class="timeline-item" tabindex="0">
+          <div class="timeline-meta">
+            <span class="job-date">Jan 2021 – Mar 2021</span>
+            <h3 class="company-name">Sterling Bank</h3>
+            <span class="job-role">Frontend Developer Intern</span>
+          </div>
+          <div class="timeline-rail">
+            <span class="timeline-dot"></span>
+          </div>
+          <div class="timeline-content">
+            <ul class="job-tasks">
+              <li>Completed an internship focused on foundational frontend development, building hands-on experience with core web technologies under senior engineer guidance</li>
+              <li>Worked on internal frontend tasks and exercises to strengthen practical skills in HTML, CSS, and JavaScript fundamentals</li>
+              <li>Gained exposure to enterprise development workflows and coding standards within a banking technology environment</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- SECTION 3: Resume -->
@@ -359,14 +486,15 @@
           </div>
         </div>
         
-        <div class="system-readout">
-          <div class="readout-title">HOST SYSTEM STACK</div>
-          <pre><code>OS      : Ubuntu 24.04 LTS (Production)
+  <div class="system-readout">
+  <div class="readout-title">HOST SYSTEM STACK</div>
+  <pre><code>OS      : Windows 11 (Windows Terminal)
+Editor  : Neovim (kickstart.nvim, vim.pack)
+Shell   : Oh My Posh
 Runtime : NodeJS v20.12.2 / Bun v1.1.18
 Backend : TypeScript / Java-Spring
-Console : tty/1 (standard inputs)
 Status  : Systems operational</code></pre>
-        </div>
+  </div>
       </div>
     </section>
 
