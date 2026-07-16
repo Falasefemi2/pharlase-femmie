@@ -149,11 +149,17 @@ button:focus-visible,
   border-bottom: 1px solid transparent;
   padding-bottom: 2px;
   white-space: nowrap;
+  transition: color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+  display: inline-block;
 }
 
 .nav-link:hover {
   color: var(--color-accent);
   border-bottom-color: var(--color-accent);
+}
+
+.nav-link:active {
+  transform: scale(0.97);
 }
 
 /* Mobile hamburger toggle — hidden on desktop */
@@ -496,7 +502,6 @@ button:focus-visible,
 
 .toggle-btn:active {
   transform: scale(0.96);
-  transition: transform var(--transition-fast);
 }
 
 .toggle-btn.active {
@@ -847,10 +852,15 @@ button:focus-visible,
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+  transition: color var(--transition-fast), transform var(--transition-fast);
 }
 
 .proj-link:hover {
   color: var(--color-text-primary);
+}
+
+.proj-link:active {
+  transform: scale(0.97);
 }
 
 .project-spec {
@@ -1168,13 +1178,19 @@ button:focus-visible,
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    transition: max-height var(--transition-normal), opacity var(--transition-normal), visibility var(--transition-normal);
+    transform: scale(0.96);
+    transform-origin: top right;
+    transition: max-height var(--transition-normal), 
+                opacity var(--transition-normal), 
+                visibility var(--transition-normal), 
+                transform var(--transition-normal);
   }
 
   .sys-nav.is-open {
     max-height: 400px;
     opacity: 1;
     visibility: visible;
+    transform: scale(1);
   }
 
   .nav-link {
@@ -1328,13 +1344,56 @@ button:focus-visible,
 /* Keyboard accessibility & reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * {
-    animation-delay: -1ms !important;
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
     background-attachment: initial !important;
     scroll-behavior: auto !important;
-    transition-duration: 0s !important;
-    transition-delay: 0s !important;
+  }
+
+  .sys-nav {
+    max-height: none !important;
+    transform: none !important;
+    transition: opacity var(--transition-fast) !important;
+  }
+  
+  .sys-nav.is-open {
+    max-height: none !important;
+    transform: none !important;
+  }
+
+  .nav-toggle, .toggle-btn, .nav-link, .proj-link {
+    transform: none !important;
+    transition: color var(--transition-fast) !important;
+  }
+
+  .job-node {
+    animation: fade-in 0.15s ease-out !important;
+    max-height: none !important;
+    transform: none !important;
+    transition: opacity var(--transition-fast) !important;
+  }
+
+  .job-node.collapsing, .retry-node.collapsing {
+    max-height: none !important;
+    margin-bottom: 0 !important;
+    padding: 0.6rem !important;
+    opacity: 0 !important;
+    transition: opacity var(--transition-fast) !important;
+  }
+
+  .retry-node {
+    animation: fade-in 0.15s ease-out !important;
+    max-height: none !important;
+    transform: none !important;
+    transition: opacity var(--transition-fast) !important;
+  }
+
+  .sys-pulse, .pulse-dot, .fiber-node[data-status="processing"] .fiber-status-dot {
+    animation: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+  }
+
+  .term-cursor {
+    animation: none !important;
   }
 }
 
