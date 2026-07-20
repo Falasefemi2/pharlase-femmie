@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-20",
+    "macrostructure": "Steel & Code Spec (Projects Addition)",
+    "theme": "Steel & Code",
+    "enrichment": "Import headers, project type specs, and custom syntax highlighter definitions",
+    "brief": "Add paystack-effect and paystack-effect-example to selected projects"
+  },
+  {
     "date": "2026-07-16",
     "macrostructure": "Steel & Code Spec (Work Experience Addition)",
     "theme": "Steel & Code",

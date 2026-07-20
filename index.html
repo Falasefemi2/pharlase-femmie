@@ -303,6 +303,61 @@
           </div>
         </article>
 
+        <!-- Project 6: paystack-effect -->
+        <article class="project-card" tabindex="0">
+          <div class="project-code-header">
+            <span class="code-keyword">import</span> { <span class="code-ident">PaystackClient</span> } <span class="code-keyword">from</span> <span class="code-str">"@falasefemi2/paystack-effect"</span>;
+          </div>
+          <div class="project-body">
+            <div class="project-info">
+              <h3 class="project-title">paystack-effect</h3>
+              <p class="project-text"><strong>Problem:</strong> Integrating Paystack's payment API inside functional-effect architectures traditionally relies on untyped fetch calls, manual parsing, and lack of compiler-enforced request/response payloads.<br><br><strong>Approach:</strong> Engineered a type-safe, Effect-TS v4 wrapper for the Paystack API. Exposes all resource endpoints (Transaction, Customer, Subscription, Transfer, etc.) as clean <code>Context.Service</code> definitions managed behind reusable dependency <code>Layers</code>, verifying runtime schemas using fully-typed request/response validation.</p>
+              <div class="project-links">
+                <a href="https://github.com/Falasefemi2/paystack-effect" target="_blank" rel="noopener noreferrer" class="proj-link">src/</a>
+              </div>
+            </div>
+            <div class="project-spec">
+              <pre><code><span class="code-keyword">interface</span> <span class="code-type">PaystackEffectSdk</span> {
+  <span class="code-prop">runtime</span>: <span class="code-type">Effect</span> &lt;<span class="code-type">v4</span>&gt;;
+  <span class="code-prop">typeValidation</span>: <span class="code-type">Schema</span>;
+  <span class="code-prop">services</span>: <span class="code-type">Context_Service</span> &lt;
+    | <span class="code-str">"Transaction"</span>
+    | <span class="code-str">"Customer"</span>
+    | <span class="code-str">"Subscription"</span>
+    | <span class="code-str">"Transfer"</span>
+  &gt;;
+  <span class="code-prop">architecture</span>: <span class="code-type">Layer</span>;
+  <span class="code-prop">clientType</span>: <span class="code-str">"Library"</span>;
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 7: paystack-effect-example -->
+        <article class="project-card" tabindex="0">
+          <div class="project-code-header">
+            <span class="code-keyword">import</span> { <span class="code-ident">PaystackExample</span> } <span class="code-keyword">from</span> <span class="code-str">"@falasefemi2/paystack-effect-example"</span>;
+          </div>
+          <div class="project-body">
+            <div class="project-info">
+              <h3 class="project-title">paystack-effect-example</h3>
+              <p class="project-text"><strong>Problem:</strong> Demonstrating full checkout payment flows securely requires coordinating price computation, transaction validation, and webhook signature verification under a production-grade backend and frontend.<br><br><strong>Approach:</strong> Built a runnable checkout reference application. The backend utilizes Bun and Effect v4 to handle server-side pricing computations and webhook signature verifications, while the frontend leverages Next.js 15 and shadcn/ui to display a responsive product catalog and payment checkout interface.</p>
+              <div class="project-links">
+                <a href="https://github.com/Falasefemi2/paystack-effect-example" target="_blank" rel="noopener noreferrer" class="proj-link">src/</a>
+              </div>
+            </div>
+            <div class="project-spec">
+              <pre><code><span class="code-keyword">type</span> <span class="code-type">PaystackExampleStack</span> = {
+  <span class="code-prop">frontend</span>: <span class="code-type">NextJS_15</span> &lt;<span class="code-type">shadcn_ui</span>&gt;;
+  <span class="code-prop">backend</span>: <span class="code-type">Bun</span> &lt;<span class="code-type">Effect_v4</span>&gt;;
+  <span class="code-prop">integration</span>: <span class="code-type">PaystackEffect</span>;
+  <span class="code-prop">security</span>: <span class="code-type">WebhookVerification</span>;
+  <span class="code-prop">clientType</span>: <span class="code-str">"Example App"</span>;
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
       </div>
 
       <!-- Additional non-public distributed-systems work details -->
